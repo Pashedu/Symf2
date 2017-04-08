@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'PasheduCompanyBundle::base.html.twig' %}
 
 {% block body %}
     <h1>Office</h1>
@@ -22,7 +22,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('office_index') }}">Back to the list</a>
+            <a href="{{ path('company_index') }}">Back to the list</a>
         </li>
         <li>
             <a href="{{ path('office_edit', { 'id': office.id }) }}">Edit</a>

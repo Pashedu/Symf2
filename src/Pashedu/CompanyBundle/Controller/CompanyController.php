@@ -5,7 +5,8 @@ namespace Pashedu\CompanyBundle\Controller;
 use Pashedu\CompanyBundle\Entity\Company;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Company controller.
@@ -26,7 +27,7 @@ class CompanyController extends Controller
 
         $companies = $em->getRepository('PasheduCompanyBundle:Company')->findAll();
 
-        return $this->render('company/index.html.twig', array(
+        return $this->render('PasheduCompanyBundle:company:index.html.twig', array(
             'companies' => $companies,
         ));
     }
@@ -51,7 +52,7 @@ class CompanyController extends Controller
             return $this->redirectToRoute('company_show', array('id' => $company->getId()));
         }
 
-        return $this->render('company/new.html.twig', array(
+        return $this->render('PasheduCompanyBundle:company:new.html.twig', array(
             'company' => $company,
             'form' => $form->createView(),
         ));
@@ -67,7 +68,7 @@ class CompanyController extends Controller
     {
         $deleteForm = $this->createDeleteForm($company);
 
-        return $this->render('company/show.html.twig', array(
+        return $this->render('PasheduCompanyBundle:company:show.html.twig', array(
             'company' => $company,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -91,7 +92,7 @@ class CompanyController extends Controller
             return $this->redirectToRoute('company_edit', array('id' => $company->getId()));
         }
 
-        return $this->render('company/edit.html.twig', array(
+        return $this->render('PasheduCompanyBundle:company:edit.html.twig', array(
             'company' => $company,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -133,4 +134,5 @@ class CompanyController extends Controller
             ->getForm()
         ;
     }
+
 }

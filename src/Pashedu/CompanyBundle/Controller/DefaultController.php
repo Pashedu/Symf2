@@ -29,4 +29,29 @@ class DefaultController extends Controller
         return $this->render('PasheduCompanyBundle:Default:addcompany.html.twig', array(
             'companies'=>$form->createView()));
     }
+    /**
+     * @Route("/about", name="about")
+     */
+    public function aboutAction()
+    {
+        return $this->render('PasheduCompanyBundle:about:about.html.twig', array(
+            'user' => 'username',
+        ));
+    }
+
+    /**
+     * @Route("/newsroom", name="newsroom")
+     */
+    public function newsroomAction()
+    {
+        return $this->render('PasheduCompanyBundle:about:newsroom.html.twig');
+    }
+
+    /**
+     * @Route("/contacts", name="contact_page")
+     */
+    public function contactsAction()
+    {
+        return $this->render('PasheduCompanyBundle:about:contacts.html.twig');
+    }
 }

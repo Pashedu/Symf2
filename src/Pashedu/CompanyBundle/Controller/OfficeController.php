@@ -26,7 +26,7 @@ class OfficeController extends Controller
 
         $offices = $em->getRepository('PasheduCompanyBundle:Office')->findAll();
 
-        return $this->render('office/index.html.twig', array(
+        return $this->render('PasheduCompanyBundle:office:index.html.twig', array(
             'offices' => $offices,
         ));
     }
@@ -51,7 +51,7 @@ class OfficeController extends Controller
             return $this->redirectToRoute('office_show', array('id' => $office->getId()));
         }
 
-        return $this->render('office/new.html.twig', array(
+        return $this->render('PasheduCompanyBundle:office:new.html.twig', array(
             'office' => $office,
             'form' => $form->createView(),
         ));
@@ -67,7 +67,7 @@ class OfficeController extends Controller
     {
         $deleteForm = $this->createDeleteForm($office);
 
-        return $this->render('office/show.html.twig', array(
+        return $this->render('PasheduCompanyBundle:office:show.html.twig', array(
             'office' => $office,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -91,7 +91,7 @@ class OfficeController extends Controller
             return $this->redirectToRoute('office_edit', array('id' => $office->getId()));
         }
 
-        return $this->render('office/edit.html.twig', array(
+        return $this->render('PasheduCompanyBundle:office:edit.html.twig', array(
             'office' => $office,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -115,7 +115,7 @@ class OfficeController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('office_index');
+        return $this->redirectToRoute('company_index');
     }
 
     /**

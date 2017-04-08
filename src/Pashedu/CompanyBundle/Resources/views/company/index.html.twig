@@ -1,0 +1,41 @@
+{% extends 'PasheduCompanyBundle::base.html.twig' %}
+
+{% block body %}
+
+        <table  class="companies table">
+            <thead>
+                <tr>
+                    <th>Назва компанії</th>
+                    <th>Дата реєстрації</th>
+                    <th>Опис Компанії</th>
+                    <th>Адреса сайту</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for company in companies %}
+                <tr>
+                    <th>{{ company.name }}</th>
+                    <th>{% if company.date %}{{ company.date|date('Y-m-d') }}{% endif %}</th>
+                    <th>{{ company.description }}</th>
+                    <th>{{ company.urltosite }}</th>
+                    <th>
+                        <ul style="list-style: none;">
+                            <li>
+                                <a href="{{ path('company_show', { 'id': company.id }) }}"><span class="glyphicon glyphicon-search"></span></a>
+                            </li>
+                            <li>
+                                <a href="{{ path('company_edit', { 'id': company.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                            </li>
+                        </ul>
+                    </th>
+                </tr>
+                <tr><td colspan="4">{% include 'PasheduCompanyBundle:office:index.html.twig' with {"offices": company.offices} only %} </td></tr>
+                <tr><td colspan="4">{% include 'PasheduCompanyBundle:worker:index.html.twig' with {"workers": company.workers} only %} </td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        <a href="{{ path('company_new') }}"><span class="glyphicon glyphicon-plus-sign"></span>Add Company</a>
+{% endblock %}

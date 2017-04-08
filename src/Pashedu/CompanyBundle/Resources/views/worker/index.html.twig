@@ -1,0 +1,30 @@
+{% block body %}
+     <table class="col-lg-8 table-striped">
+        <thead>
+            <tr>
+
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Phone</th>
+                <th>Pemail</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for worker in workers %}
+            <tr>
+                <td>{{ worker.firstname }}</td>
+                <td>{{ worker.lastname }}</td>
+                <td>{{ worker.phone }}</td>
+                <td>{{ worker.pemail }}</td>
+                <td style="text-align: right">
+                    <a href="{{ path('worker_show', { 'id': worker.id }) }}"><span class="glyphicon glyphicon-search"></span></a>
+                    <a href="{{ path('worker_edit', { 'id': worker.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr><td><a href="{{ path('worker_new') }}"><span class="glyphicon glyphicon-plus">Worker</span></a></td></tr>
+        </tbody>
+    </table>
+
+{% endblock %}

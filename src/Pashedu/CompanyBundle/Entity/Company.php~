@@ -2,7 +2,9 @@
 
 namespace Pashedu\CompanyBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Company
@@ -46,6 +48,9 @@ class Company
      * @var string
      *
      * @ORM\Column(name="Urltosite", type="string", length=255, nullable=true)
+     * @Assert\Url(
+     * message = "Enter proper Url"
+     * )
      */
     private $urltosite;
 
@@ -58,6 +63,12 @@ class Company
      * @ORM\OneToMany(targetEntity="Office", mappedBy="company")
      */
     private $offices;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
 
     /**
      * Get id
@@ -167,6 +178,14 @@ class Company
     {
         $this->workers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->offices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    //ToString
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->name;
     }
 
     /**

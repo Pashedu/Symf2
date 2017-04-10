@@ -9,6 +9,7 @@
                     <th>Дата реєстрації</th>
                     <th>Опис Компанії</th>
                     <th>Адреса сайту</th>
+                    <th>Категорія</th>
                     <th></th>
                 </tr>
             </thead>
@@ -19,6 +20,7 @@
                     <th>{% if company.date %}{{ company.date|date('Y-m-d') }}{% endif %}</th>
                     <th>{{ company.description }}</th>
                     <th>{{ company.urltosite }}</th>
+                    <th>{{ company.category }}</th>
                     <th>
                         <ul style="list-style: none;">
                             <li>

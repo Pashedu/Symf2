@@ -16,7 +16,7 @@
             <tr>
                 <td><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
                 <td>{{ category.categoryname }}</td>
-                <td>{% include 'PasheduCompanyBundle:category:index.html.twig' with {"categories": categories.children} only %} </td>
+                <td>{% include 'PasheduCompanyBundle:category:index_1.html.twig' with {"categories": category.children} only %} </td>
                 <td>
                     <ul>
                         <li>

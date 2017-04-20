@@ -29,8 +29,14 @@ class Category
     private $children;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     *
+     */
+    private $treeroot;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $parent;
 
@@ -140,5 +146,27 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set treeroot
+     *
+     * @param \Pashedu\CompanyBundle\Entity\Category $treeroot
+     * @return Category
+     */
+    public function setTreeroot(\Pashedu\CompanyBundle\Entity\Category $treeroot = null)
+    {
+        $this->treeroot = $treeroot;
+        return $this;
+    }
+
+    /**
+     * Get treeroot
+     *
+     * @return \Pashedu\CompanyBundle\Entity\Category
+     */
+    public function getTreeroot()
+    {
+        return $this->treeroot;
     }
 }

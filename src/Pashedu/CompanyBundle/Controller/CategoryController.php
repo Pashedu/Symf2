@@ -25,6 +25,7 @@ class CategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $categories = $em->getRepository('PasheduCompanyBundle:Category')->findBy(array('parent'=>null));
+        //$categories = $em->getRepository('PasheduCompanyBundle:Category')->findAll();
         return $this->render('PasheduCompanyBundle:category:index.html.twig', array(
             'categories' => $categories,
         ));
@@ -44,9 +45,29 @@ class CategoryController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            if($category->getParent()){
+                $category->setTreeroot($category->getParent()->getTreeroot());
+            }
+            else
+            {
+                $category->setTreeroot($category);
+            }
             $em->persist($category);
-            $em->flush($category);
-
+            $em->flush();
+            foreach ($category->getChildren() as $child)
+            {
+                $query=$em->createQueryBuilder()
+                    ->update('PasheduCompanyBundle:Category','c')
+                    ->set('c.treeroot','?1')
+                    ->where('c.treeroot = ?2')
+                    ->setParameter(1,$category->getTreeroot())
+                    ->setParameter(2,$child->getTreeroot())
+                    ->getQuery();
+                $res=$query->execute();
+                $child->setParent($category);
+                $em->persist($child);
+                $em->flush();
+            }
             return $this->redirectToRoute('category_show', array('id' => $category->getId()));
         }
 
@@ -85,9 +106,38 @@ class CategoryController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em=$this->getDoctrine()->getManager();
+            if($category->getParent())
+            {
+                $category->setTreeroot($category->getParent()->getTreeroot());
+            }
+            else
+            {
+                $category->setTreeroot($category);
+            }
+            //$catM = $em->getRepository('PasheduCompanyBundle:Category')->find($category->getId());
+            //dump($catM);
 
-            return $this->redirectToRoute('category_edit', array('id' => $category->getId()));
+            $query=$em->createQueryBuilder()
+                ->update('PasheduCompanyBundle:Category','c')
+                ->set('c.parent','?1')
+                ->set('c.treeroot','c.id')
+                ->where('c.parent = ?2')
+                ->setParameter(1,null)
+                ->setParameter(2,$category->getId())
+                ->getQuery();
+            $res=$query->execute();
+            foreach ($category->getChildren() as $child)
+            {
+                $child->setParent($category);
+                $child->setTreeroot($category->getTreeroot());
+                $em->persist($child);
+                $em->flush();
+            }
+            $em->persist($category);
+            $em->flush();
+            //return $this->redirectToRoute('category_edit', array('id' => $category->getId()));
+            return $this->redirectToRoute('category_index');
         }
 
         return $this->render('PasheduCompanyBundle:category:edit.html.twig', array(

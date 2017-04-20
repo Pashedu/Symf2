@@ -31,11 +31,12 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             {% if is_granted('ROLE_USER') %}
-                                <li><a href="#">Log Out <strong>{{ app.user.username }}</strong></a></li>
+                                <li><a href="{{ path('sonata_user_security_logout') }}">Log Out <strong>{{ app.user.username }}</strong></a></li>
                             {% else %}
-                                <li><a href="#">Log In</a></li>
+                                <li><a href="{{ path('sonata_user_security_login') }}">Log In</a></li>
                             {% endif %}
-                            <li><a href="#">Register</a></li>
+                            <li><a href="{{ path('sonata_user_registration_register') }}">Register</a></li>
+                            <li><a href="{{ path('sonata_admin_redirect') }}">Admin</a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
